@@ -113,8 +113,8 @@ it("keeps main pushes proposal-only and gates merged-release automation", async 
     token: "${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}",
     "target-branch": "main",
     "skip-github-release": true,
+    "skip-github-pull-request": "${{ secrets.RELEASE_PLEASE_TOKEN == '' }}",
   });
-  expect(action?.with?.["skip-github-pull-request"]).not.toBe(true);
   expect(action?.if).toBe("steps.editorial.outputs.frozen != 'true'");
   expect(proposal.steps[0]?.run).toContain("rea:release-notes-finalized");
   expect(proposal.steps[0]?.run).toContain("--paginate");
