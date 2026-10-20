@@ -54,6 +54,12 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
           target-branch: main
           skip-github-release: true
+          skip-github-pull-request: ${{ secrets.RELEASE_PLEASE_TOKEN == '' }}
+
+      - name: Explain paused release proposal refresh
+        if: steps.editorial.outputs.frozen != 'true' && secrets.RELEASE_PLEASE_TOKEN == ''
+        run: |
+          echo "Automatic release proposal refresh is paused because RELEASE_PLEASE_TOKEN is not configured. Configure RELEASE_PLEASE_TOKEN to allow Release Please to create proposal pull requests from this workflow." >> "$GITHUB_STEP_SUMMARY"
 
   merged-release:
     name: Release reviewed main merge

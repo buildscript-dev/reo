@@ -188,7 +188,10 @@ gh workflow run release.yml --ref main \
 
 Release Please targets that branch and prepares its version, changelog, and
 registry metadata. The workflow uses an optional `RELEASE_PLEASE_TOKEN`
-repository secret and otherwise uses the built-in `GITHUB_TOKEN`. A dedicated
+repository secret and otherwise uses the built-in `GITHUB_TOKEN`. Automatic
+proposal refresh on `main` requires `RELEASE_PLEASE_TOKEN`; without it, the
+workflow records that proposal refresh is paused instead of failing when
+GitHub Actions cannot create pull requests with the built-in token. A dedicated
 GitHub App or personal access token can start PR CI automatically. With the
 built-in token, `opened`, `synchronize`, and `reopened` PR events create runs
 that require a maintainer with write access to approve them. See
